@@ -4,43 +4,47 @@ game();
 
 
 
-function playRound(playerSelection, computerSelection){
+
+function playRound(playerSelection){
+    const computerSelection = computerPlay();
     console.log("What is your choise?")
     console.log("Player selects" + playerSelection)
     console.log("Computer selects" + computerSelection)
 
+
     if (playerSelection === "Rock" && computerSelection === "Rock"){
-        console.log("Tie")
+        document.querySelector('#text').innerHTML = 'its a tie';
     } else if (playerSelection === "Rock" && computerSelection === "Paper"){
         computerScore++;
-        console.log("Computer wins")
+        document.querySelector('#text').innerHTML = 'Computer wins this round';
     } else if (playerSelection === "Rock" && computerSelection === "Scissors"){
         playerScore++;
-        console.log("Human wins")
+        document.querySelector('#text').innerHTML = 'You win this round';
     }
 
 
     if (playerSelection === "Paper" && computerSelection === "Paper"){
-        console.log("Tie")
+        document.querySelector('#text').innerHTML = 'its a tie'
     } else if (playerSelection === "Paper" && computerSelection === "Scissors"){
         computerScore++;
-        console.log("Computer wins")
+        document.querySelector('#text').innerHTML = 'Computer wins this round';
     } else if (playerSelection === "Paper" && computerSelection === "Rock"){
         playerScore++;
-        console.log("Human wins")
+        document.querySelector('#text').innerHTML = 'You win this round';
     }
 
     if (playerSelection === "Scissors" && computerSelection === "Scissors"){
-        console.log("Tie")
+        document.querySelector('#text').innerHTML = 'its a tie'
     } else if (playerSelection === "Scissors" && computerSelection === "Rock"){
         computerScore++;
-        console.log("Computer wins")
+        document.querySelector('#text').innerHTML = 'Computer wins this round';
     } else if (playerSelection === "Scissors" && computerSelection === "Paper"){
         playerScore++;
-        console.log("Human wins")
+        document.querySelector('#text').innerHTML = 'You win this round';
     }
-    console.log("Computer score" + computerScore );
-    console.log("Player score" + playerScore)
+    document.querySelector('#Cscore').innerHTML =('Computer score' + computerScore);
+    document.querySelector('#Pscore').innerHTML =('player score'+ playerScore);
+    gameEnd();
 }
 
 function computerPlay() {
@@ -52,20 +56,42 @@ function computerPlay() {
 }
 
 function game() {
-    for (let i = 0; i < 5; i++) {
-        console.log("Round #" + i)
-        const playerSelection = prompt("Choose your weapon")
-        const computerSelection = computerPlay();
-        playRound(playerSelection, computerSelection);
-    }
-    console.log("Game over")
-    if(playerScore > computerScore) {
-        console.log("You are the Winner")
-    } else if (playerScore == computerScore) {
-        console.log("Its a tie")
-    } else if (playerScore < computerScore) {
-        console.log ("Computer wins");
+    { 
+    const playerSelection = choises(); 
+    const computerSelection = computerPlay();
+    playRound(playerSelection, computerSelection);
+};
+
+
+
+function choises() {
+    const Rock = document.getElementById('Rock');
+    Rock.addEventListener('click', () => {
+        playRound(playerSelection = "Rock"); 
+        
+    })
+    const Paper = document.getElementById('Paper');
+    Paper.addEventListener('click', () => {
+        playRound(playerSelection = "Paper");
+    })
+    const Scissors = document.getElementById('Scissors');
+    Scissors.addEventListener('click', () => {
+        playRound(playerSelection ='Scissors');
+        
+    })
+}};
+
+function gameEnd() {
+    if (computerScore === 5) {
+        document.querySelector('#gameEnd').innerHTML = ('computer wins')
+        disableButtons()
+    } else if (playerScore === 5) {
+        document.querySelector('#gameEnd').innerHTML = ('playerwins')
+        disableButtons()
     }
 }
-
-
+function disableButtons() {
+    document.getElementById("Rock").disabled = true;
+    document.getElementById("Paper").disabled = true;
+    document.getElementById("Scissors").disabled = true;
+}
